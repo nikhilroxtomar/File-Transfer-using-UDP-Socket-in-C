@@ -4,7 +4,6 @@ A simple C program for file transfer between the client and the server using the
 
 The process is as follows:
 - Server is started.
-- Client connect to server.
 - Client read the text file and send data to the server.
 - Server creates a text file.
 - Server received the data from the client and write it into the text file.
