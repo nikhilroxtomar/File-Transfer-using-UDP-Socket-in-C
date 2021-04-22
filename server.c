@@ -6,42 +6,42 @@
 
 #define SIZE 1024
 
-void write_file(int sockfd, struct sockaddr_in addr){
-  FILE *fp;
-  char *filename = "server.txt";
+void write_file(int sockfd, struct sockaddr_in addr)
+{
+
+  char* filename = "server.txt";
   int n;
   char buffer[SIZE];
   socklen_t addr_size;
 
   // Creating a file.
-  fp = fopen(filename, "w");
+  FILE* fp = fp = fopen(filename, "w");
 
   // Receiving the data and writing it into the file.
-  while(1){
-
+  while (1)
+  {
     addr_size = sizeof(addr);
     n = recvfrom(sockfd, buffer, SIZE, 0, (struct sockaddr*)&addr, &addr_size);
 
-    if (strcmp(buffer, "END") == 0){
+    if (strcmp(buffer, "END") == 0)
+    {
       break;
-      return;
     }
 
     printf("[RECEVING] Data: %s", buffer);
     fprintf(fp, "%s", buffer);
     bzero(buffer, SIZE);
-
   }
 
   fclose(fp);
-  return;
 }
 
-int main(){
+int main()
+{
 
   // Defining the IP and Port
-  char *ip = "127.0.0.1";
-  int port = 8080;
+  char* ip = "127.0.0.1";
+  const int port = 8080;
 
   // Defining variables
   int server_sockfd;
@@ -51,7 +51,8 @@ int main(){
 
   // Creating a UDP socket
   server_sockfd = socket(AF_INET, SOCK_DGRAM, 0);
-  if (server_sockfd < 0){
+  if (server_sockfd < 0)
+  {
     perror("[ERROR] socket error");
     exit(1);
   }
@@ -60,7 +61,8 @@ int main(){
   server_addr.sin_addr.s_addr = inet_addr(ip);
 
   e = bind(server_sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
-  if (e < 0){
+  if (e < 0)
+  {
     perror("[ERROR] bind error");
     exit(1);
   }
